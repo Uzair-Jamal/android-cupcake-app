@@ -26,27 +26,21 @@ import com.example.cupcake.components.FormattedPriceLabel
 
 @Composable
 fun SelectOptionScreen(
-
     subtotal: String,
     options: List<String>,
     onSelectionChanged: (String) -> Unit = {},
     onCancelButtonClicked: () -> Unit = {},
     onNextButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
-
 ){
-    var selectedValue by rememberSaveable{ mutableStateOf("") }
+    var selectedValue by rememberSaveable { mutableStateOf("") }
 
     Column(
-        modifier = Modifier,
+        modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(
-            modifier = Modifier
-            .padding(dimensionResource(id = R.dimen.padding_medium))
-        ){
-            options.forEach{
-                item ->
+        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))){
+            options.forEach { item ->
                 Row(
                     modifier = Modifier.selectable(
                         selected = selectedValue == item,
@@ -68,54 +62,49 @@ fun SelectOptionScreen(
                 }
             }
             Divider(
-                thickness = dimensionResource(id = R.dimen.thickness_divider),
-                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium))
+                thickness = dimensionResource(R.dimen.thickness_divider),
+                modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
             )
             FormattedPriceLabel(
                 subtotal = subtotal,
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(
-                        top = dimensionResource(id = R.dimen.padding_medium),
-                        bottom = dimensionResource(R.dimen.padding_small)
+                        top = dimensionResource(R.dimen.padding_medium),
+                        bottom = dimensionResource(R.dimen.padding_medium)
                     )
             )
-
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(dimensionResource(id = R.dimen.padding_medium))
+                .padding(dimensionResource(R.dimen.padding_medium))
                 .weight(1f, false),
-            horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium)),
+            horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
             verticalAlignment = Alignment.Bottom
         ){
-            OutlinedButton(
-                modifier = Modifier.weight(1f) ,
-                onClick = onCancelButtonClicked
-            ){
-                Text(text = stringResource(id = R.string.cancel))
+            OutlinedButton(modifier = Modifier.weight(1f), onClick = onCancelButtonClicked) {
+                Text(stringResource(R.string.cancel))
             }
             Button(
                 modifier = Modifier.weight(1f),
+                // the button is enabled when the user makes a selection
                 enabled = selectedValue.isNotEmpty(),
                 onClick = onNextButtonClicked
-            ){
-                Text(stringResource(id = R.string.next))
+            ) {
+                Text(stringResource(R.string.next))
             }
         }
-
     }
+
 }
-
-
 
 @Preview
 @Composable
-fun SelectedOptionPreview(){
+fun SelectOptionPreview(){
     SelectOptionScreen(
-        subtotal = "222.33",
-        options = listOf("Option 1", "Option 2", "Option 3"),
+        subtotal = "299.99",
+        options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
         modifier = Modifier.fillMaxHeight()
     )
 }
